@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {AppRegistry, View, Text, Button, StyleSheet} from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import {View, Text, Button, StyleSheet} from 'react-native';
 
 export default class StudentScreen extends Component {
   static navigationOptions = {

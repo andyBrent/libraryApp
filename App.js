@@ -1,9 +1,10 @@
 import React from 'react';
-import Welcome from './src/welcome/welcomePage';
 import AppContainer from './src/common/createNavigator';
+
+import Test from './src/database/test';
 const App: () => React$Node = () => {
-  // return <Welcome />;
-  return <AppContainer />;
+  // return <AppContainer />;
+  return <Test />;
 };
 
 export default App;
