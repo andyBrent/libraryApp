@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: Colors.black,
   },
   subText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     textAlign: 'right',
     color: Colors.black,
