@@ -19,17 +19,12 @@ const BookSchema = {
   },
 };
 import Colors from '../welcome/NewAppScreen/components/Colors';
-import Showresult from './showResult';
-
 const Realm = require('realm');
 
 export default class Test extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      realm: null,
-      books: null,
-    };
+    this.state = {realm: null};
   }
 
   addBook(new_title, new_id, new_author, new_category) {
@@ -154,7 +149,7 @@ export default class Test extends Component {
         ? total_num
         : realm.objects('Library').filtered(filter).length;
     if (filter_num !== total_num && filter_num > 0) {
-      this.state.books = realm.objects('Library').filtered(filter);
+      var books = realm.objects('Library').filtered(filter);
     }
 
     return (
@@ -164,14 +159,24 @@ export default class Test extends Component {
         </View>
         <View style={styles.container}>
           <View style={styles.separator} />
-          <View style={styles.linkContainer}>
-            <Text style={styles.link}>书籍名称</Text>
-            <Text style={styles.link}>书本编号</Text>
-            <Text style={styles.link}>作者名称</Text>
-            <Text style={styles.link}>书籍类别</Text>
-          </View>
+          accessibilityRole={'button'}
+          style={styles.linkContainer}><Text style={styles.link}>书籍名称</Text>
+          <Text style={styles.link}>书本编号</Text>
+          <Text style={styles.link}>作者名称</Text>
+          <Text style={styles.link}>书籍类别</Text>
           <View style={styles.separator} />
-          <Showresult books={this.state.books} />
+          {books.map((item, index) => {
+            <React.Fragment key={index}>
+              <View style={styles.separator} />
+              <TouchableOpacity
+                accessibilityRole={'button'}
+                onPress={() => openURLInBrowser(item.link)}
+                style={styles.linkContainer}>
+                <Text style={styles.link}>{item.title}</Text>
+                <Text style={styles.description}>{item.description}</Text>
+              </TouchableOpacity>
+            </React.Fragment>;
+          })}
         </View>
         <View style={styles.container}>
           <Text style={styles.number}>书目总数为：{total_num}</Text>
@@ -190,12 +195,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pleaseEnterText: {
-    fontSize: 20,
-    fontWeight: '200',
+    fontSize: 15,
+    fontWeight: '300',
   },
   link: {
     flex: 2,
-    fontSize: 19,
+    fontSize: 16,
     fontWeight: '400',
   },
   container: {
@@ -205,7 +210,7 @@ const styles = StyleSheet.create({
   linkContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 8,
   },

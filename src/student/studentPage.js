@@ -7,7 +7,18 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
-import Realm from '../database/realm';
+import RealmDB from '../database/realm';
+
+const Realm = require('realm');
+const BookSchema = {
+  name: 'Library',
+  properties: {
+    title: 'string',
+    id: 'string',
+    author: 'string',
+    category: 'string',
+  },
+};
 
 export default class StudentScreen extends Component {
   constructor(props) {
@@ -22,12 +33,12 @@ export default class StudentScreen extends Component {
       submit_author: '',
       submit_category: '',
     };
-    this._onPressButton = this._onPressButton.bind(this);
+    this._onSearch = this._onSearch.bind(this);
   }
   static navigationOptions = {
     title: '学生/教师端',
   };
-  _onPressButton = () => {
+  _onSearch = () => {
     // this.props.addTodo(this.state.input);
     this.setState({
       submit_title: this.state.title,
@@ -38,6 +49,18 @@ export default class StudentScreen extends Component {
       id: '',
       author: '',
       category: '',
+    });
+  };
+  _onDelte = () => {
+    Realm.open({
+      schema: [BookSchema],
+    }).then(realm => {
+      let allBooks = realm.objects('Library');
+      realm.write(() => {
+        realm.delete(allBooks);
+      });
+
+      realm.close();
     });
   };
   render() {
@@ -88,9 +111,10 @@ export default class StudentScreen extends Component {
           </Text>
         </View>
         <View style={styles.inputAreaTable}>
-          <Button title="查询" onPress={this._onPressButton} />
+          <Button title="查询" onPress={this._onSearch} />
+          <Button title="清除全部数据" onPress={this._onDelte} />
         </View>
-        <Realm
+        <RealmDB
           title={this.state.submit_title}
           id={this.state.submit_id}
           author={this.state.submit_author}
