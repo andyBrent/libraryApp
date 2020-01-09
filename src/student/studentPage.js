@@ -82,15 +82,15 @@ export default class StudentScreen extends Component {
         <View style={styles.inputAreaTable}>
           <Button title="查询" onPress={this._onPressButton} />
         </View>
-        <View style={styles.welcome}>
-          <Button onPress={() => navigate('Welcome')} title="回到首页" />
-        </View>
         <Realm
           title={this.state.title}
           id={this.state.id}
           author={this.state.author}
           category={this.state.category}
         />
+        <View style={styles.welcome}>
+          <Button onPress={() => navigate('Welcome')} title="回到首页" />
+        </View>
       </ScrollView>
     );
   }
