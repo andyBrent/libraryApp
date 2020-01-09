@@ -6,26 +6,31 @@ import {
   StyleSheet,
   ScrollView,
   TextInput,
-  placeholder,
 } from 'react-native';
-// import ShowResult from '../database/showResult';
+import Realm from '../database/realm';
 
 export default class StudentScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
+      title: '',
+      id: '',
+      author: '',
+      category: '',
     };
+    this._onPressButton = this._onPressButton.bind(this);
   }
   static navigationOptions = {
     title: '学生/教师端',
   };
-  updateInput = input => {
-    this.setState({input});
-  };
-  handleClick = () => {
+  _onPressButton = () => {
     // this.props.addTodo(this.state.input);
-    this.setState({input: ''});
+    this.setState({
+      title: '',
+      id: '',
+      author: '',
+      category: '',
+    });
   };
   render() {
     const {navigate} = this.props.navigation;
@@ -35,9 +40,7 @@ export default class StudentScreen extends Component {
           <Text style={styles.hello}>同学/老师 你好!</Text>
         </View>
         <View>
-          <Text style={styles.text}>
-            请在下面输入您需要寻找的书籍名称、编号、作者名称或者类别
-          </Text>
+          <Text style={styles.text}>请在下面输入您需要寻找的书籍信息</Text>
         </View>
         <View style={styles.inputAreaText}>
           <Text>书籍名称</Text>
@@ -47,48 +50,62 @@ export default class StudentScreen extends Component {
         </View>
         <View style={styles.inputAreaTable}>
           <TextInput
-            onChange={e => this.updateInput(e.target.value)}
-            value={this.state.input}
+            onChangeText={title => this.setState({title})}
+            value={this.state.title}
             style={styles.input}
             placeholder="如：复活"
           />
           <TextInput
-            onChange={e => this.updateInput(e.target.value)}
-            value={this.state.input}
+            onChangeText={id => this.setState({id})}
+            value={this.state.id}
             style={styles.input}
             placeholder="001-010"
           />
           <TextInput
-            onChange={e => this.updateInput(e.target.value)}
-            value={this.state.input}
+            onChangeText={author => this.setState({author})}
+            value={this.state.author}
             style={styles.input}
             placeholder="如：莫言"
           />
           <TextInput
-            onChange={e => this.updateInput(e.target.value)}
-            value={this.state.input}
+            onChangeText={category => this.setState({category})}
+            value={this.state.category}
             style={styles.input}
             placeholder="见注释"
           />
         </View>
-        <View>
+        <View style={styles.attentionView}>
           <Text style={styles.attention}>
             *注：书籍类别有：小说、散文、杂文、其他四类
           </Text>
-          <Button title="查询" onClick={this.handleClick} />
+        </View>
+        <View style={styles.inputAreaTable}>
+          <Button title="查询" onPress={this._onPressButton} />
         </View>
         <View style={styles.welcome}>
           <Button onPress={() => navigate('Welcome')} title="回到首页" />
         </View>
-        {/* <ShowResult/> */}
+        <Realm
+          title={this.state.title}
+          id={this.state.id}
+          author={this.state.author}
+          category={this.state.category}
+        />
       </ScrollView>
     );
   }
 }
 const styles = StyleSheet.create({
-  text: {marginTop: 15, fontSize: 13},
+  hello: {
+    marginLeft: 20,
+    marginTop: 20,
+    fontSize: 20,
+    fontWeight: '900',
+    color: 'black',
+  },
+  text: {marginLeft: 20, marginTop: 15, fontSize: 13},
   inputAreaText: {
-    marginTop: 15,
+    marginTop: 20,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
@@ -108,10 +125,14 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   attention: {
-    marginTop: 15,
+    marginTop: 5,
+    marginRight: 10,
     fontSize: 10,
-    alignContent: 'space-around',
+    alignContent: 'flex-end',
   },
-  hello: {marginTop: 20, fontSize: 20, fontWeight: '900', color: 'black'},
+  attentionView: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
   welcome: {marginTop: 10, flex: 1, alignItems: 'center'},
 });
