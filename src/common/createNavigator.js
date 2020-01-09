@@ -13,7 +13,7 @@ const RootStack = createStackNavigator(
     Administer: AdministerScreen,
   },
   {
-    initialRouteName: 'Welcome',
+    initialRouteName: 'Administer',
   },
 );
 
