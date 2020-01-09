@@ -76,6 +76,7 @@ export default class Test extends Component {
   }
 
   componentWillUnmount() {
+    this.setState({books: null});
     const {realm} = this.state;
     if (realm !== null && !realm.isClosed) {
       realm.close();
@@ -84,6 +85,9 @@ export default class Test extends Component {
 
   render() {
     let realm = this.state.realm;
+    if (this.props.searchAll === true) {
+      this.state.books = realm.objects('Library');
+    }
     const filter = this.createFilter(
       this.props.title,
       this.props.id,
