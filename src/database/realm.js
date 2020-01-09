@@ -71,62 +71,6 @@ export default class Test extends Component {
     Realm.open({
       schema: [BookSchema],
     }).then(realm => {
-      realm.write(() => {
-        realm.create('Library', {
-          title: 'Gone',
-          id: '001',
-          author: 'Mitchel',
-          category: '小说',
-        });
-        realm.create('Library', {
-          title: '朝花夕拾',
-          id: '002',
-          author: '鲁迅',
-          category: '散文',
-        });
-        realm.create('Library', {
-          title: '杂的文',
-          id: '003',
-          author: '韩寒',
-          category: '杂文',
-        });
-        realm.create('Library', {
-          title: '彼岸花',
-          id: '004',
-          author: '安妮宝贝',
-          category: '散文',
-        });
-        realm.create('Library', {
-          title: '呐喊',
-          id: '005',
-          author: '鲁迅',
-          category: '小说',
-        });
-        realm.create('Library', {
-          title: '三闲集',
-          id: '006',
-          author: '鲁迅',
-          category: '杂文',
-        });
-        realm.create('Library', {
-          title: '眠空',
-          id: '007',
-          author: '安妮宝贝',
-          category: '小说',
-        });
-        realm.create('Library', {
-          title: '匆匆',
-          id: '008',
-          author: '朱自清',
-          category: '散文',
-        });
-        realm.create('Library', {
-          title: '背影',
-          id: '009',
-          author: '朱自清',
-          category: '小说',
-        });
-      });
       this.setState({realm});
     });
   }
@@ -155,6 +99,8 @@ export default class Test extends Component {
         : realm.objects('Library').filtered(filter).length;
     if (filter_num !== total_num && filter_num > 0) {
       this.state.books = realm.objects('Library').filtered(filter);
+    } else if (filter_num !== total_num && filter_num === 0) {
+      this.state.books = null;
     }
 
     return (

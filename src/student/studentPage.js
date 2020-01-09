@@ -51,6 +51,104 @@ export default class StudentScreen extends Component {
       category: '',
     });
   };
+  _onNew = () => {
+    Realm.open({
+      schema: [BookSchema],
+    }).then(realm => {
+      realm.write(() => {
+        realm.create('Library', {
+          title: 'Gone',
+          id: '001',
+          author: 'Mitchel',
+          category: '小说',
+        });
+        realm.create('Library', {
+          title: '朝花夕拾',
+          id: '002',
+          author: '鲁迅',
+          category: '散文',
+        });
+        realm.create('Library', {
+          title: '杂的文',
+          id: '003',
+          author: '韩寒',
+          category: '杂文',
+        });
+        realm.create('Library', {
+          title: '彼岸花',
+          id: '004',
+          author: '安妮宝贝',
+          category: '散文',
+        });
+        realm.create('Library', {
+          title: '呐喊',
+          id: '005',
+          author: '鲁迅',
+          category: '小说',
+        });
+        realm.create('Library', {
+          title: '三闲集',
+          id: '006',
+          author: '鲁迅',
+          category: '杂文',
+        });
+        realm.create('Library', {
+          title: '眠空',
+          id: '007',
+          author: '安妮宝贝',
+          category: '小说',
+        });
+        realm.create('Library', {
+          title: '匆匆',
+          id: '008',
+          author: '朱自清',
+          category: '散文',
+        });
+        realm.create('Library', {
+          title: '背影',
+          id: '009',
+          author: '朱自清',
+          category: '小说',
+        });
+        realm.create('Library', {
+          title: '我欲',
+          id: '010',
+          author: '莫言',
+          category: '其他',
+        });
+        realm.create('Library', {
+          title: '红高粱家族',
+          id: '011',
+          author: '莫言',
+          category: '杂文',
+        });
+        realm.create('Library', {
+          title: '等待摩西',
+          id: '012',
+          author: '莫言',
+          category: '小说',
+        });
+        realm.create('Library', {
+          title: '蛙',
+          id: '013',
+          author: '莫言',
+          category: '散文',
+        });
+        realm.create('Library', {
+          title: '蛙',
+          id: '014',
+          author: '李晓娥',
+          category: '其他',
+        });
+        realm.create('Library', {
+          title: 'Gone',
+          id: '015',
+          author: '木心',
+          category: '小说',
+        });
+      });
+    });
+  };
   _onDelte = () => {
     Realm.open({
       schema: [BookSchema],
@@ -84,13 +182,13 @@ export default class StudentScreen extends Component {
             onChangeText={title => this.setState({title})}
             value={this.state.title}
             style={styles.input}
-            placeholder="如：复活"
+            placeholder="如：Gone"
           />
           <TextInput
             onChangeText={id => this.setState({id})}
             value={this.state.id}
             style={styles.input}
-            placeholder="001-010"
+            placeholder="001-013"
           />
           <TextInput
             onChangeText={author => this.setState({author})}
@@ -112,7 +210,6 @@ export default class StudentScreen extends Component {
         </View>
         <View style={styles.inputAreaTable}>
           <Button title="查询" onPress={this._onSearch} />
-          <Button title="清除全部数据" onPress={this._onDelte} />
         </View>
         <RealmDB
           title={this.state.submit_title}
@@ -120,6 +217,10 @@ export default class StudentScreen extends Component {
           author={this.state.submit_author}
           category={this.state.submit_category}
         />
+        <View style={styles.inputAreaTable}>
+          <Button title="新建数据库" onPress={this._onNew} />
+          <Button title="清除全部数据" onPress={this._onDelte} />
+        </View>
         <View style={styles.welcome}>
           <Button onPress={() => navigate('Welcome')} title="回到首页" />
         </View>
