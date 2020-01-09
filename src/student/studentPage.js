@@ -17,6 +17,10 @@ export default class StudentScreen extends Component {
       id: '',
       author: '',
       category: '',
+      submit_title: '',
+      submit_id: '',
+      submit_author: '',
+      submit_category: '',
     };
     this._onPressButton = this._onPressButton.bind(this);
   }
@@ -26,6 +30,10 @@ export default class StudentScreen extends Component {
   _onPressButton = () => {
     // this.props.addTodo(this.state.input);
     this.setState({
+      submit_title: this.state.title,
+      submit_id: this.state.id,
+      submit_author: this.state.author,
+      submit_category: this.state.category,
       title: '',
       id: '',
       author: '',
@@ -83,10 +91,10 @@ export default class StudentScreen extends Component {
           <Button title="查询" onPress={this._onPressButton} />
         </View>
         <Realm
-          title={this.state.title}
-          id={this.state.id}
-          author={this.state.author}
-          category={this.state.category}
+          title={this.state.submit_title}
+          id={this.state.submit_id}
+          author={this.state.submit_author}
+          category={this.state.submit_category}
         />
         <View style={styles.welcome}>
           <Button onPress={() => navigate('Welcome')} title="回到首页" />
