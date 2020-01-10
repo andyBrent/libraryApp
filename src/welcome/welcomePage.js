@@ -1,3 +1,6 @@
+/*
+  主页面
+ */
 import React, {Component} from 'react';
 import {
   SafeAreaView,
@@ -75,21 +78,21 @@ export default class Welcome extends Component {
                 <View style={styles.separator} />
                 <TouchableOpacity
                   accessibilityRole={'button'}
-                  onPress={() => navigate('Administer')}
-                  style={styles.linkContainer}>
-                  <Text style={styles.link}>图书馆管理员</Text>
-                  <Text style={styles.description}>
-                    更新数据库、查看书目状态、查看借阅报告
-                  </Text>
-                </TouchableOpacity>
-                <View style={styles.separator} />
-                <TouchableOpacity
-                  accessibilityRole={'button'}
                   onPress={() => navigate('Student')}
                   style={styles.linkContainer}>
                   <Text style={styles.link}>学生或教师</Text>
                   <Text style={styles.description}>
                     搜索书目、查看书籍状态、借阅或购买
+                  </Text>
+                </TouchableOpacity>
+                <View style={styles.separator} />
+                <TouchableOpacity
+                  accessibilityRole={'button'}
+                  onPress={() => navigate('Administer')}
+                  style={styles.linkContainer}>
+                  <Text style={styles.link}>图书馆管理员</Text>
+                  <Text style={styles.description}>
+                    更新数据库、查看书目状态、查看借阅报告
                   </Text>
                 </TouchableOpacity>
                 <View style={styles.separator} />
@@ -106,7 +109,6 @@ export default class Welcome extends Component {
                     点击进入上海财经大学英贤图书馆官网
                   </Text>
                 </TouchableOpacity>
-                <View style={styles.separator} />
               </View>
             </View>
           </ScrollView>
@@ -138,8 +140,9 @@ const styles = StyleSheet.create({
   },
   sectionDescription: {
     marginTop: 8,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '400',
+    lineHeight: 20,
     color: Colors.dark,
   },
   sectionDescriptionList: {
