@@ -111,16 +111,6 @@ export default class ReactAD extends Component {
     }
     let realm = this.state.realm;
     if (this.props.add === true) {
-      const filter = this.createFilter(null, this.props.id, null, null);
-      if (realm.objects('Library').filtered(filter)) {
-        return (
-          <View style={styles.pleaseEnterView}>
-            <Text style={styles.pleaseEnterText}>
-              已经存在编号相同的书籍！请重新编号！
-            </Text>
-          </View>
-        );
-      }
       this.addBook(
         this.props.title,
         this.props.id,
