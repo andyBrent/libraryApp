@@ -8,6 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import RealmDB from '../database/realm';
+import RealmAD from '../database/realm_add_delete';
 
 const Realm = require('realm');
 const BookSchema = {
@@ -32,7 +33,13 @@ export default class StudentScreen extends Component {
       submit_id: '',
       submit_author: '',
       submit_category: '',
+      new_title: '',
+      new_id: '',
+      new_author: '',
+      new_category: '',
       searchAll: false,
+      add: false,
+      delete: false,
     };
     this._onSearch = this._onSearch.bind(this);
   }
@@ -51,8 +58,41 @@ export default class StudentScreen extends Component {
       author: '',
       category: '',
       searchAll: false,
+      add: false,
+      delete: false,
     });
   };
+  _onAdd = () => {
+    this.setState({
+      submit_title: this.state.new_title,
+      submit_id: this.state.new_id,
+      submit_author: this.state.new_author,
+      submit_category: this.state.new_category,
+      title: '',
+      id: '',
+      author: '',
+      category: '',
+      searchAll: false,
+      add: true,
+      delete: false,
+    });
+  };
+  _onDelete = () => {
+    this.setState({
+      submit_title: this.state.new_title,
+      submit_id: this.state.new_id,
+      submit_author: this.state.new_author,
+      submit_category: this.state.new_category,
+      title: '',
+      id: '',
+      author: '',
+      category: '',
+      searchAll: false,
+      delete: true,
+      add: false,
+    });
+  };
+
   _onSearchAll = () => {
     this.setState({
       searchAll: true,
@@ -64,6 +104,8 @@ export default class StudentScreen extends Component {
       id: '',
       author: '',
       category: '',
+      add: false,
+      delete: false,
     });
   };
   _onNew = () => {
@@ -162,9 +204,10 @@ export default class StudentScreen extends Component {
           category: '小说',
         });
       });
+      realm.close();
     });
   };
-  _onDelte = () => {
+  _onDeleteAll = () => {
     Realm.open({
       schema: [BookSchema],
     }).then(realm => {
@@ -172,7 +215,6 @@ export default class StudentScreen extends Component {
       realm.write(() => {
         realm.delete(allBooks);
       });
-
       realm.close();
     });
   };
@@ -234,9 +276,62 @@ export default class StudentScreen extends Component {
           category={this.state.submit_category}
           searchAll={this.state.searchAll}
         />
+        <View style={styles.separator} />
+        <View>
+          <Text style={styles.text}>请在下面输入您需要删改的书籍信息</Text>
+        </View>
+        <View style={styles.inputAreaText}>
+          <Text>书籍名称</Text>
+          <Text>书本编号</Text>
+          <Text>作者名称</Text>
+          <Text>书籍类别</Text>
+        </View>
+        <View style={styles.inputAreaTable}>
+          <TextInput
+            onChangeText={new_title => this.setState({new_title})}
+            value={this.state.new_title}
+            style={styles.input}
+            placeholder="如：Gone"
+          />
+          <TextInput
+            onChangeText={new_id => this.setState({new_id})}
+            value={this.state.new_id}
+            style={styles.input}
+            placeholder="001-013"
+          />
+          <TextInput
+            onChangeText={new_author => this.setState({new_author})}
+            value={this.state.new_author}
+            style={styles.input}
+            placeholder="如：莫言"
+          />
+          <TextInput
+            onChangeText={new_category => this.setState({new_category})}
+            value={this.state.new_category}
+            style={styles.input}
+            placeholder="见注释"
+          />
+        </View>
+        <View style={styles.inputAreaTable}>
+          <Button title="增加书目" onPress={this._onAdd} />
+          <Button title="删除书目" onPress={this._onDelete} />
+        </View>
+        <View style={styles.attentionView}>
+          <Text style={styles.attention}>
+            *注：增加或删除书目需要给出完整的四项信息
+          </Text>
+        </View>
+        <RealmAD
+          title={this.state.submit_title}
+          id={this.state.submit_id}
+          author={this.state.submit_author}
+          category={this.state.submit_category}
+          add={this.state.add}
+          delete={this.state.delete}
+        />
         <View style={styles.inputAreaTable}>
           <Button title="新建数据库" onPress={this._onNew} />
-          <Button title="清除全部数据" onPress={this._onDelte} />
+          <Button title="清除全部数据" onPress={this._onDeleteAll} />
         </View>
         <View style={styles.welcome}>
           <Button onPress={() => navigate('Welcome')} title="回到首页" />
@@ -284,5 +379,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
-  welcome: {marginTop: 10, flex: 1, alignItems: 'center'},
+  welcome: {marginTop: 20, flex: 1, alignItems: 'center'},
+  separator: {
+    marginTop: 25,
+    backgroundColor: '#444',
+    height: 1,
+  },
 });

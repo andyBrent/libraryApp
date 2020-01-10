@@ -85,6 +85,9 @@ export default class Test extends Component {
 
   render() {
     let realm = this.state.realm;
+    if (this.props.add || this.props.delete === true) {
+      return <Text style={styles.pleaseEnterText}>请输入</Text>;
+    }
     if (this.props.searchAll === true) {
       this.state.books = realm.objects('Library');
     }
@@ -94,8 +97,13 @@ export default class Test extends Component {
       this.props.author,
       this.props.category,
     );
-
-    const info = filter.length === 0 ? '请输入' : '查询语句为' + filter;
+    const filter_info = filter
+      .replace(/id/g, '书本编号')
+      .replace(/title/g, '书籍名称')
+      .replace(/author/g, '作者名称')
+      .replace(/category/g, '书籍类别')
+      .replace(/AND/g, ' 和 ');
+    const info = filter.length === 0 ? '请输入' : '查询条件为\n' + filter_info;
     const total_num = realm ? realm.objects('Library').length : '0';
     let filter_num =
       filter.length === 0
