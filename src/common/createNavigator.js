@@ -1,3 +1,6 @@
+/*
+  实现页面跳转
+ */
 import * as React from 'react';
 import {AppRegistry, createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';

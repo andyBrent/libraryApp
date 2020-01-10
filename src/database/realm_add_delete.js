@@ -1,3 +1,6 @@
+/*
+  数据库增删
+ */
 import React, {Component} from 'react';
 import {
   View,
@@ -9,15 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-const BookSchema = {
-  name: 'Library',
-  properties: {
-    title: 'string',
-    id: 'string',
-    author: 'string',
-    category: 'string',
-  },
-};
+import {BookSchema} from '../database/Schemas';
 import Colors from '../welcome/NewAppScreen/components/Colors';
 import Showresult from './showResult';
 
@@ -116,19 +111,29 @@ export default class ReactAD extends Component {
     }
     let realm = this.state.realm;
     if (this.props.add === true) {
+      const filter = this.createFilter(null, this.props.id, null, null);
+      if (realm.objects('Library').filtered(filter)) {
+        return (
+          <View style={styles.pleaseEnterView}>
+            <Text style={styles.pleaseEnterText}>
+              已经存在编号相同的书籍！请重新编号！
+            </Text>
+          </View>
+        );
+      }
       this.addBook(
         this.props.title,
         this.props.id,
         this.props.author,
         this.props.category,
       );
-      const filter = this.createFilter(
+      const new_filter = this.createFilter(
         this.props.title,
         this.props.id,
         this.props.author,
         this.props.category,
       );
-      this.state.books = realm.objects('Library').filtered(filter);
+      this.state.books = realm.objects('Library').filtered(new_filter);
 
       return (
         <SafeAreaView>
@@ -198,7 +203,7 @@ const styles = StyleSheet.create({
   },
   pleaseEnterText: {
     fontSize: 20,
-    fontWeight: '200',
+    fontWeight: '800',
   },
   link: {
     flex: 2,

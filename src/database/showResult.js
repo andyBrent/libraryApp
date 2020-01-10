@@ -1,3 +1,6 @@
+/*
+  查询结果显示
+ */
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../welcome/NewAppScreen//components/Colors';

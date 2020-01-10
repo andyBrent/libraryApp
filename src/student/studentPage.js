@@ -1,3 +1,6 @@
+/*
+  管理员端
+ */
 import React, {Component} from 'react';
 import {
   View,
@@ -8,17 +11,7 @@ import {
   TextInput,
 } from 'react-native';
 import RealmDB from '../database/realm';
-
-const Realm = require('realm');
-const BookSchema = {
-  name: 'Library',
-  properties: {
-    title: 'string',
-    id: 'string',
-    author: 'string',
-    category: 'string',
-  },
-};
+import {BookSchema} from '../database/Schemas';
 
 export default class StudentScreen extends Component {
   constructor(props) {

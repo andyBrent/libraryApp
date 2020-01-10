@@ -1,3 +1,6 @@
+/*
+  数据库查询
+ */
 import React, {Component} from 'react';
 import {
   View,
@@ -9,15 +12,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-const BookSchema = {
-  name: 'Library',
-  properties: {
-    title: 'string',
-    id: 'string',
-    author: 'string',
-    category: 'string',
-  },
-};
+import {BookSchema} from '../database/Schemas';
 import Colors from '../welcome/NewAppScreen/components/Colors';
 import Showresult from './showResult';
 
@@ -30,21 +25,6 @@ export default class Test extends Component {
       realm: null,
       books: null,
     };
-  }
-
-  addBook(new_title, new_id, new_author, new_category) {
-    Realm.open({
-      schema: [BookSchema],
-    }).then(realm => {
-      realm.write(() => {
-        realm.create('Library', {
-          title: new_title,
-          id: new_id,
-          author: new_author,
-          category: new_category,
-        });
-      });
-    });
   }
 
   createFilter(title, id, author, category) {
