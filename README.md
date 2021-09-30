@@ -1,4 +1,2 @@
-# database_homework
 
-数据库作业
-使用react-native框架结合realm数据库，模拟对图书馆数据库进行增删改查操作
+Used react-native framework and realm database to simulate adding, deleting, modifying and checking the library database
